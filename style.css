@@ -1,0 +1,2193 @@
+/* Minecraft font for navbar links */
+@font-face {
+    font-family: "Minecraft";
+    src: url("./fonts/Minecraft.ttf") format("truetype");
+}
+
+/* ---- CUSTOM CURSORS (24x24, from cursorset/) ---- */
+body {
+    margin: 0;
+    min-height: 100vh;
+    cursor: url("cursorset/sm_Normal.cur"), auto;
+}
+
+a, button, .social-icon, #music-btn, #work-btn, .see-more {
+    cursor: url("cursorset/sm_Link.cur"), pointer;
+}
+
+input, textarea, [contenteditable] {
+    cursor: url("cursorset/sm_Text.cur"), text;
+}
+
+[title] {
+    cursor: url("cursorset/sm_Help.cur"), help;
+}
+
+[onclick], .clickable {
+    cursor: url("cursorset/sm_Link.cur"), pointer;
+}
+
+.copy-area, [data-copy] {
+    cursor: url("cursorset/sm_copy.cur"), copy;
+}
+
+.draggable, [draggable] {
+    cursor: url("cursorset/sm_Move.cur"), move;
+}
+
+.no-click, [disabled] {
+    cursor: url("cursorset/sm_NotAllowed.cur"), not-allowed;
+}
+
+/* Smooth scroll for anchor links */
+html {
+    scroll-behavior: smooth;
+}
+
+/* ---- FULL-PAGE BACKGROUND ---- */
+.bg-container {
+    background-image: url("Pics/landscape.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    position: relative;
+}
+
+.bg-container::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 30%, rgba(255, 160, 50, 0.08) 0%, transparent 50%);
+    animation: bgLightPulse 4s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ---- NAVBAR ---- */
+.NavbarMain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 30px;
+    z-index: 100;
+    box-sizing: border-box;
+    transition: background 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.NavbarMain.scrolled {
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(6px);
+}
+
+.listClass {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.listClass a {
+    font-family: "Minecraft", sans-serif;
+    font-size: 25px;
+    color: rgb(207, 143, 82);
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
+    padding: 6px 14px;
+    transition: color 0.3s ease;
+    z-index: 1;
+    white-space: nowrap;
+}
+
+/* White highlight box behind hovered link */
+.listClass a::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: white;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.listClass a:hover {
+    color: black;
+}
+
+.listClass a:hover::before {
+    animation: bgSequence 0.7s ease forwards;
+}
+
+@keyframes bgSequence {
+    0% { opacity: 1; background-color: white; }
+    30% { opacity: 1; background-color: white; }
+    100% { opacity: 1; background-color: rgba(207, 143, 82, 0.6); }
+}
+
+/* Navbar links fall from above */
+@keyframes fallDown {
+    0% { transform: translateY(-80px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes bgLightPulse {
+    0% { opacity: 0.3; transform: scale(1); }
+    100% { opacity: 0.8; transform: scale(1.05); }
+}
+
+/* ---- HERO ---- */
+.Hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 800px;
+    padding-top: 100px;
+    position: relative;
+}
+
+.hero-card {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.hero-image {
+    position: relative;
+    z-index: 1;
+}
+
+/* Profile photo – initially hidden, animated via JS */
+.hero-image img {
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    border: 4px solid transparent;
+    box-shadow: 0 0 30px rgba(207, 143, 82, 0.3), 0 0 60px rgba(207, 143, 82, 0.1);
+    opacity: 0;
+}
+
+/* Quote box – slides out horizontally from the left */
+.hero-quote {
+    margin: 0 0 0 -35px;
+    padding: 25px 35px 25px 40px;
+    max-width: 540px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 0 15px 15px 0;
+    transform-origin: left;
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.hero-quote.visible {
+    animation: quoteExtend 1.5s ease-out forwards;
+}
+
+/* Individual quote lines – fall down from above */
+.quote-name {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 36px;
+    font-weight: 500;
+    color: rgb(207, 143, 82);
+    margin: 0 0 5px 0;
+    opacity: 0;
+}
+
+.quote-name.visible {
+    animation: fallDownQuote 0.5s ease-out forwards;
+}
+
+.quote-title {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 22px;
+    font-weight: 500;
+    font-style: italic;
+    color: rgb(207, 143, 82);
+    margin: 0 0 10px 0;
+    opacity: 0;
+}
+
+.quote-title.visible {
+    animation: fallDownQuote 0.5s ease-out forwards;
+}
+
+.quote-text {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 22px;
+    font-weight: 400;
+    font-style: italic;
+    color: rgb(207, 143, 82);
+    line-height: 1.6;
+    display: block;
+    opacity: 0;
+}
+
+.quote-text.visible {
+    animation: fallDownQuote 0.5s ease-out forwards;
+}
+
+@keyframes fallDownQuote {
+    0% { opacity: 0; transform: translateY(-40px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes quoteExtend {
+    0% { opacity: 0; transform: scaleX(0); }
+    60% { opacity: 1; transform: scaleX(1.1); }
+    100% { opacity: 1; transform: scaleX(1); }
+}
+
+/* ---- "SEE MORE" ARROW ---- */
+.see-more {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    position: absolute;
+    bottom: 20px;
+    color: rgb(207, 143, 82);
+    font-family: Arial, sans-serif;
+    text-decoration: none;
+}
+
+.see-more-arrow {
+    font-size: 20px;
+    display: inline-block;
+    opacity: 0;
+}
+
+.see-more-arrow.visible {
+    animation: arrowFall 1s ease-out forwards infinite;
+}
+
+.see-more-text {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0;
+}
+
+.see-more-text.visible {
+    animation: textFadeIn 0.6s ease-out forwards;
+}
+
+@keyframes arrowFall {
+    0% { opacity: 0; transform: translateY(-10px); }
+    30% { opacity: 1; }
+    60% { opacity: 1; transform: translateY(5px); }
+    100% { opacity: 0; transform: translateY(10px); }
+}
+
+@keyframes textFadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* ---- HERO BUTTONS (music + work) ---- */
+.hero-buttons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+#music-btn {
+    display: inline-block;
+    z-index: 10;
+    transition: transform 0.3s ease;
+}
+
+#music-btn:hover {
+    transform: scale(1.3);
+}
+
+.music-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.music-hint {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 18px;
+    font-style: italic;
+    color: rgb(207, 143, 82);
+    white-space: nowrap;
+    opacity: 0;
+    transform: rotate(-4deg);
+}
+
+.music-hint.visible {
+    animation: btnAppear 0.6s ease-out forwards,
+               hintSway 4s ease-in-out 0.6s infinite;
+}
+
+@keyframes hintSway {
+    0%, 100% { transform: rotate(-4deg); }
+    25% { transform: rotate(-1deg); }
+    50% { transform: rotate(-4deg); }
+    75% { transform: rotate(-7deg); }
+}
+
+#music-btn img {
+    width: 120px;
+    height: auto;
+    display: block;
+    opacity: 0;
+}
+
+#music-btn img.visible {
+    animation: btnAppear 0.6s ease-out forwards;
+}
+
+#work-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Minecraft", sans-serif;
+    font-size: 28px;
+    color: rgb(207, 143, 82);
+    text-decoration: none;
+    padding: 14px 40px;
+    border: 4px solid rgb(207, 143, 82);
+    background: rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 10;
+    opacity: 0;
+    margin-top: 20px;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    box-shadow:
+        4px 4px 0 0 rgba(207, 143, 82, 0.3),
+        -2px -2px 0 0 rgba(207, 143, 82, 0.1);
+}
+
+#work-btn::before,
+#work-btn::after {
+    content: '';
+    position: absolute;
+    --c: rgb(207, 143, 82);
+    --t: 4px;
+    --l: 16px;
+    pointer-events: none;
+}
+
+#work-btn::before {
+    inset: -6px;
+    background:
+        linear-gradient(to right, var(--c) var(--l), transparent 0) left top,
+        linear-gradient(to bottom, var(--c) var(--l), transparent 0) left top,
+        linear-gradient(to left, var(--c) var(--l), transparent 0) right top,
+        linear-gradient(to bottom, var(--c) var(--l), transparent 0) right top,
+        linear-gradient(to right, var(--c) var(--l), transparent 0) left bottom,
+        linear-gradient(to top, var(--c) var(--l), transparent 0) left bottom,
+        linear-gradient(to left, var(--c) var(--l), transparent 0) right bottom,
+        linear-gradient(to top, var(--c) var(--l), transparent 0) right bottom;
+    background-repeat: no-repeat;
+    background-size: var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l);
+}
+
+#work-btn::after {
+    inset: -10px;
+    background:
+        linear-gradient(to right, var(--c) var(--l), transparent 0) left top,
+        linear-gradient(to bottom, var(--c) var(--l), transparent 0) left top,
+        linear-gradient(to left, var(--c) var(--l), transparent 0) right top,
+        linear-gradient(to bottom, var(--c) var(--l), transparent 0) right top,
+        linear-gradient(to right, var(--c) var(--l), transparent 0) left bottom,
+        linear-gradient(to top, var(--c) var(--l), transparent 0) left bottom,
+        linear-gradient(to left, var(--c) var(--l), transparent 0) right bottom,
+        linear-gradient(to top, var(--c) var(--l), transparent 0) right bottom;
+    background-repeat: no-repeat;
+    background-size: var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l);
+}
+
+#work-btn.visible {
+    animation:
+        titleFadeIn 0.5s ease-out forwards,
+        titleColorCycle 5s ease-in-out 0.5s infinite,
+        titlePulse 3s ease-in-out 0.5s infinite;
+}
+
+#work-btn:hover {
+    background: rgb(207, 143, 82);
+    color: #000;
+    transform: scale(1.05);
+}
+
+@keyframes btnAppear {
+    0% { opacity: 0; transform: scale(0.3); }
+    60% { opacity: 1; transform: scale(1.1); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* ---- SOCIAL ICONS ---- */
+.social-icons {
+    display: flex;
+    gap: 12px;
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+}
+
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.social-icon svg {
+    fill: rgb(207, 143, 82);
+    display: block;
+}
+
+.social-icon:hover {
+    transform: scale(1.3);
+    background: rgba(207, 143, 82, 0.15);
+}
+
+.ProyectsConteiner{
+    min-height: 100vh;
+    background-image: url("Pics/camp.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 60px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Warm glow overlay so the h1 stays readable */
+.ProyectsConteiner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 0;
+}
+
+.ProyectsConteiner > h1 {
+    position: relative;
+    z-index: 2;
+}
+
+/* Campfire flicker – soft radial glow that pulses */
+.fire-glow {
+    position: absolute;
+    bottom: 8%;
+    left: 50%;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 160, 50, 0.35) 0%, rgba(255, 100, 20, 0.15) 40%, transparent 70%);
+    transform: translateX(-50%);
+    animation: fireFlicker 1.5s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Ground glow – warm light spreading on the floor */
+.ground-glow {
+    position: absolute;
+    bottom: 6%;
+    left: 50%;
+    width: 500px;
+    height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(255, 160, 50, 0.2) 0%, rgba(255, 100, 20, 0.08) 50%, transparent 80%);
+    transform: translateX(-50%);
+    animation: groundPulse 3s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.about-section .fire-glow {
+    bottom: calc(8% - 100px);
+    left: calc(50% + 65px);
+}
+
+.about-section .ground-glow {
+    bottom: calc(6% - 100px);
+    left: calc(50% + 65px);
+}
+
+
+
+@keyframes fireFlicker {
+    0%   { opacity: 0.5; transform: translateX(-50%) scale(1); }
+    25%  { opacity: 1;   transform: translateX(-50%) scale(1.08); }
+    50%  { opacity: 0.7; transform: translateX(-50%) scale(0.95); }
+    75%  { opacity: 0.9; transform: translateX(-50%) scale(1.04); }
+    100% { opacity: 0.6; transform: translateX(-50%) scale(0.98); }
+}
+
+@keyframes groundPulse {
+    0%, 100% { opacity: 0.4; transform: translateX(-50%) scaleX(1); }
+    50%      { opacity: 0.9; transform: translateX(-50%) scaleX(1.15); }
+}
+.ProyectsConteiner h1{
+    font-family: "Minecraft", sans-serif;
+    font-size: 52px;
+    color: rgb(207, 143, 82);
+    text-align: center;
+    padding: 20px 45px;
+    margin: 0;
+    display: inline-block;
+    opacity: 0;
+    --c: rgb(207, 143, 82);
+    --t: 5px;
+    --l: 30px;
+    background:
+        linear-gradient(to right, var(--c) var(--l), transparent 0) left top,
+        linear-gradient(to bottom, var(--c) var(--l), transparent 0) left top,
+        linear-gradient(to left, var(--c) var(--l), transparent 0) right top,
+        linear-gradient(to bottom, var(--c) var(--l), transparent 0) right top,
+        linear-gradient(to right, var(--c) var(--l), transparent 0) left bottom,
+        linear-gradient(to top, var(--c) var(--l), transparent 0) left bottom,
+        linear-gradient(to left, var(--c) var(--l), transparent 0) right bottom,
+        linear-gradient(to top, var(--c) var(--l), transparent 0) right bottom;
+    background-repeat: no-repeat;
+    background-size: var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l);
+}
+
+.ProyectsConteiner.visible h1 {
+    animation:
+        titleFadeIn 0.5s ease-out forwards,
+        titleColorCycle 5s ease-in-out 0.5s infinite,
+        titlePulse 3s ease-in-out 0.5s infinite;
+}
+
+@keyframes titleFadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes titleColorCycle {
+    0% { color: rgb(207, 143, 82); }
+    2% { color: white; }
+    5% { color: #aaa; }
+    8% { color: #9b59b6; }
+    10% { color: rgb(207, 143, 82); }
+    100% { color: rgb(207, 143, 82); }
+}
+
+@keyframes titlePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+}
+
+/* ---- TECHNOLOGIES SECTION ---- */
+.technologies-section {
+    min-height: 100vh;
+    background-image: url("Pics/tecbackgrounds.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 80px 20px 60px;
+    position: relative;
+    overflow: hidden;
+}
+
+.tech-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 0;
+}
+
+.crystal-glow {
+    position: absolute;
+    bottom: 30%;
+    left: 50%;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(circle, rgba(155, 89, 182, 0.4) 0%, rgba(142, 68, 173, 0.15) 40%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+    animation: crystalPulse 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes crystalPulse {
+    0% { opacity: 0.3; transform: translateX(-50%) scale(0.9); }
+    50% { opacity: 0.9; transform: translateX(-50%) scale(1.15); }
+    100% { opacity: 0.4; transform: translateX(-50%) scale(1); }
+}
+
+.technologies-section > h1 {
+    position: relative;
+    z-index: 2;
+    font-family: "Minecraft", sans-serif;
+    font-size: 52px;
+    color: rgb(207, 143, 82);
+    text-align: center;
+    margin: 0 0 8px;
+    padding: 20px 45px;
+    display: inline-block;
+    opacity: 0;
+    --c: rgb(207, 143, 82);
+    --t: 5px;
+    --l: 30px;
+    background:
+        linear-gradient(to right, var(--c) var(--l), transparent 0) left top,
+        linear-gradient(to bottom, var(--c) var(--l), transparent 0) left top,
+        linear-gradient(to left, var(--c) var(--l), transparent 0) right top,
+        linear-gradient(to bottom, var(--c) var(--l), transparent 0) right top,
+        linear-gradient(to right, var(--c) var(--l), transparent 0) left bottom,
+        linear-gradient(to top, var(--c) var(--l), transparent 0) left bottom,
+        linear-gradient(to left, var(--c) var(--l), transparent 0) right bottom,
+        linear-gradient(to top, var(--c) var(--l), transparent 0) right bottom;
+    background-repeat: no-repeat;
+    background-size: var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l);
+}
+
+.technologies-section.visible > h1 {
+    animation: titleFadeIn 0.5s ease-out forwards,
+               titleColorCycle 5s ease-in-out 0.5s infinite,
+               titlePulse 3s ease-in-out 0.5s infinite;
+}
+
+.tech-magic {
+    position: relative;
+    z-index: 2;
+    font-family: "Minecraft", sans-serif;
+    font-size: 22px;
+    color: rgb(207, 143, 82);
+    letter-spacing: 4px;
+    margin: 0 0 40px;
+    opacity: 0;
+}
+
+.technologies-section.visible .tech-magic {
+    animation: fadeFallIn 0.5s ease-out 0.3s forwards;
+}
+
+/* ---- MAGIC GRID ---- */
+.magic-grid {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    max-width: 1000px;
+    width: 100%;
+}
+
+.level-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.level-title {
+    font-family: "Minecraft", sans-serif;
+    font-size: 20px;
+    color: rgb(207, 143, 82);
+    letter-spacing: 6px;
+    margin: 0 0 14px;
+    opacity: 0;
+}
+
+.technologies-section.visible .level-title {
+    animation: fadeFallIn 0.4s ease-out forwards;
+}
+
+.technologies-section.visible .level-group:nth-child(1) .level-title { animation-delay: 0.3s; }
+.technologies-section.visible .level-group:nth-child(2) .level-title { animation-delay: 0.55s; }
+.technologies-section.visible .level-group:nth-child(3) .level-title { animation-delay: 0.8s; }
+
+.level-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 18px;
+    width: 100%;
+}
+
+.magic-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 140px;
+    padding: 20px 12px 16px;
+    border: 1px solid rgba(207, 143, 82, 0.3);
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.35);
+    transition: background 0.25s ease, transform 0.25s ease;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.magic-card:hover {
+    background: rgba(207, 143, 82, 0.15);
+    transform: translateY(-4px);
+}
+
+.technologies-section.visible .level-group:nth-child(1) .magic-card {
+    animation: magicCardIn 0.4s ease-out forwards;
+}
+.technologies-section.visible .level-group:nth-child(1) .magic-card:nth-child(1) { animation-delay: 0.4s; }
+.technologies-section.visible .level-group:nth-child(1) .magic-card:nth-child(2) { animation-delay: 0.45s; }
+.technologies-section.visible .level-group:nth-child(1) .magic-card:nth-child(3) { animation-delay: 0.5s; }
+.technologies-section.visible .level-group:nth-child(1) .magic-card:nth-child(4) { animation-delay: 0.55s; }
+.technologies-section.visible .level-group:nth-child(1) .magic-card:nth-child(5) { animation-delay: 0.6s; }
+
+.technologies-section.visible .level-group:nth-child(2) .magic-card {
+    animation: magicCardIn 0.4s ease-out forwards;
+}
+.technologies-section.visible .level-group:nth-child(2) .magic-card:nth-child(1) { animation-delay: 0.65s; }
+.technologies-section.visible .level-group:nth-child(2) .magic-card:nth-child(2) { animation-delay: 0.7s; }
+.technologies-section.visible .level-group:nth-child(2) .magic-card:nth-child(3) { animation-delay: 0.75s; }
+.technologies-section.visible .level-group:nth-child(2) .magic-card:nth-child(4) { animation-delay: 0.8s; }
+.technologies-section.visible .level-group:nth-child(2) .magic-card:nth-child(5) { animation-delay: 0.85s; }
+.technologies-section.visible .level-group:nth-child(2) .magic-card:nth-child(6) { animation-delay: 0.9s; }
+
+.technologies-section.visible .level-group:nth-child(3) .magic-card {
+    animation: magicCardIn 0.4s ease-out forwards;
+}
+.technologies-section.visible .level-group:nth-child(3) .magic-card:nth-child(1) { animation-delay: 0.95s; }
+.technologies-section.visible .level-group:nth-child(3) .magic-card:nth-child(2) { animation-delay: 1s; }
+
+@keyframes magicCardIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.magic-card svg {
+    color: rgb(207, 143, 82);
+    flex-shrink: 0;
+}
+
+.magic-card[data-level="3"] svg {
+    animation: svgGlow 1.5s ease-in-out infinite;
+    filter: drop-shadow(0 0 4px rgb(207, 143, 82));
+}
+
+@keyframes svgGlow {
+    0%, 100% { filter: drop-shadow(0 0 4px rgb(207, 143, 82)); }
+    8% { filter: drop-shadow(0 0 14px rgb(255, 255, 255)); }
+    16% { filter: drop-shadow(0 0 8px rgb(207, 143, 82)); }
+    24% { filter: drop-shadow(0 0 16px rgb(231, 76, 60)); }
+    32% { filter: drop-shadow(0 0 4px rgb(207, 143, 82)); }
+}
+
+.magic-name {
+    font-family: "Minecraft", sans-serif;
+    font-size: 14px;
+    color: rgb(207, 143, 82);
+    text-align: center;
+    line-height: 1.2;
+}
+
+/* ---- MAGIC BARS ---- */
+.magic-bars {
+    display: flex;
+    gap: 5px;
+    align-items: flex-end;
+    height: 24px;
+}
+
+.magic-bars .bar {
+    display: block;
+    width: 10px;
+    height: 18px;
+    border-radius: 3px;
+    background: #555;
+    transition: background 0.3s ease;
+}
+
+/* Level 1: one gray bar */
+.magic-card[data-level="1"] .bar {
+    background: #555;
+}
+
+/* Level 2: gray + nav color */
+.magic-card[data-level="2"] .bar:nth-child(1) {
+    background: #555;
+}
+
+.magic-card[data-level="2"] .bar:nth-child(2) {
+    background: rgb(207, 143, 82);
+}
+
+/* Level 3: gray + nav color + red with animation */
+.magic-card[data-level="3"] .bar:nth-child(1) {
+    background: #555;
+}
+
+.magic-card[data-level="3"] .bar:nth-child(2) {
+    background: rgb(207, 143, 82);
+}
+
+.magic-card[data-level="3"] .bar:nth-child(3) {
+    background: rgb(207, 143, 82);
+    animation: barColorCycle 1.5s ease-in-out infinite;
+}
+
+@keyframes barColorCycle {
+    0% { background-color: rgb(207, 143, 82); }
+    8% { background-color: white; }
+    16% { background-color: #aaa; }
+    24% { background-color: #e74c3c; }
+    32% { background-color: rgb(207, 143, 82); }
+    100% { background-color: rgb(207, 143, 82); }
+}
+
+.magic-card:hover .bar {
+    filter: brightness(1.2);
+}
+
+/* ---- GOALS SECTION ---- */
+.goals-section {
+    min-height: 100vh;
+    background-image: url("Pics/Mygoals.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 240px 20px 60px;
+    position: relative;
+    overflow: hidden;
+}
+
+.goals-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(to bottom, #000 0%, transparent 100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.goals-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(to top, #000 0%, transparent 100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.goals-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 0;
+}
+
+.goals-section > h1 {
+    position: relative;
+    z-index: 2;
+    font-family: "Minecraft", sans-serif;
+    font-size: 52px;
+    color: rgb(207, 143, 82);
+    text-align: center;
+    margin: 0 0 50px;
+    padding: 20px 45px;
+    display: inline-block;
+    opacity: 0;
+    --c: rgb(207, 143, 82);
+    --t: 5px;
+    --l: 30px;
+    background:
+        linear-gradient(to right, var(--c) var(--l), transparent 0) left top,
+        linear-gradient(to bottom, var(--c) var(--l), transparent 0) left top,
+        linear-gradient(to left, var(--c) var(--l), transparent 0) right top,
+        linear-gradient(to bottom, var(--c) var(--l), transparent 0) right top,
+        linear-gradient(to right, var(--c) var(--l), transparent 0) left bottom,
+        linear-gradient(to top, var(--c) var(--l), transparent 0) left bottom,
+        linear-gradient(to left, var(--c) var(--l), transparent 0) right bottom,
+        linear-gradient(to top, var(--c) var(--l), transparent 0) right bottom;
+    background-repeat: no-repeat;
+    background-size: var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l);
+}
+
+.goals-section.visible > h1 {
+    animation: titleFadeIn 0.5s ease-out forwards,
+               titleColorCycle 5s ease-in-out 0.5s infinite,
+               titlePulse 3s ease-in-out 0.5s infinite;
+}
+
+.goals-container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    max-width: 1100px;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.goals-section.visible .goals-container {
+    animation: skillsFadeIn 0.8s ease-out forwards;
+}
+
+.goal-card {
+    position: relative;
+    flex: 1;
+    min-width: 280px;
+    max-width: 340px;
+    padding: 30px 24px;
+    background: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.goal-card::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    --c: rgb(207, 143, 82);
+    --t: 3px;
+    --l: 20px;
+    background:
+        linear-gradient(to right, var(--c) var(--l), transparent 0) left top,
+        linear-gradient(to bottom, var(--c) var(--l), transparent 0) left top,
+        linear-gradient(to left, var(--c) var(--l), transparent 0) right top,
+        linear-gradient(to bottom, var(--c) var(--l), transparent 0) right top,
+        linear-gradient(to right, var(--c) var(--l), transparent 0) left bottom,
+        linear-gradient(to top, var(--c) var(--l), transparent 0) left bottom,
+        linear-gradient(to left, var(--c) var(--l), transparent 0) right bottom,
+        linear-gradient(to top, var(--c) var(--l), transparent 0) right bottom;
+    background-repeat: no-repeat;
+    background-size: var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.goal-card:hover {
+    background: rgba(207, 143, 82, 0.1);
+    transform: translateY(-4px);
+}
+
+.goals-section.visible .goal-card {
+    animation: magicCardIn 0.5s ease-out forwards;
+}
+
+.goals-section.visible .goal-card:nth-child(1) { animation-delay: 0.3s; }
+.goals-section.visible .goal-card:nth-child(2) { animation-delay: 0.5s; }
+.goals-section.visible .goal-card:nth-child(3) { animation-delay: 0.7s; }
+
+.goal-title {
+    font-family: "Minecraft", sans-serif;
+    font-size: 22px;
+    color: rgb(207, 143, 82);
+    margin: 0 0 12px;
+}
+
+.goal-desc {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 18px;
+    color: rgb(207, 143, 82);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* ---- SKILLS SECTION ---- */
+.skills-section {
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #000 0%, #0a0612 25%, #050308 50%, #0a0612 75%, #000 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 320px 20px 60px;
+    position: relative;
+    overflow: hidden;
+}
+
+.skills-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(to top, #000 0%, transparent 100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.skills-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 80%, rgba(100, 50, 150, 0.08) 0%, transparent 60%);
+    z-index: 0;
+}
+
+.skills-container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 250px;
+    max-width: 1100px;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.skills-section.visible .skills-container {
+    animation: skillsFadeIn 0.8s ease-out forwards;
+}
+
+@keyframes skillsFadeIn {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- SKILLS LIST ---- */
+.skills-list {
+    flex: 1;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.skills-title {
+    font-family: "Minecraft", sans-serif;
+    font-size: 52px;
+    color: rgb(207, 143, 82);
+    text-align: center;
+    margin: 40px 0 60px;
+    padding: 20px 45px;
+    display: inline-block;
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    --c: rgb(207, 143, 82);
+    --t: 5px;
+    --l: 30px;
+    background:
+        linear-gradient(to right, var(--c) var(--l), transparent 0) left top,
+        linear-gradient(to bottom, var(--c) var(--l), transparent 0) left top,
+        linear-gradient(to left, var(--c) var(--l), transparent 0) right top,
+        linear-gradient(to bottom, var(--c) var(--l), transparent 0) right top,
+        linear-gradient(to right, var(--c) var(--l), transparent 0) left bottom,
+        linear-gradient(to top, var(--c) var(--l), transparent 0) left bottom,
+        linear-gradient(to left, var(--c) var(--l), transparent 0) right bottom,
+        linear-gradient(to top, var(--c) var(--l), transparent 0) right bottom;
+    background-repeat: no-repeat;
+    background-size: var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l);
+}
+
+.skills-section.visible .skills-title {
+    animation: titleFadeIn 0.5s ease-out forwards,
+               titleColorCycle 5s ease-in-out 0.5s infinite,
+               titlePulse 3s ease-in-out 0.5s infinite;
+}
+
+.skill-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: background 0.25s ease, transform 0.25s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.skill-item::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    --c: rgb(207, 143, 82);
+    --t: 4px;
+    --l: 14px;
+    background:
+        linear-gradient(to right, var(--c) var(--l), transparent 0) left top,
+        linear-gradient(to bottom, var(--c) var(--l), transparent 0) left top,
+        linear-gradient(to left, var(--c) var(--l), transparent 0) right top,
+        linear-gradient(to bottom, var(--c) var(--l), transparent 0) right top,
+        linear-gradient(to right, var(--c) var(--l), transparent 0) left bottom,
+        linear-gradient(to top, var(--c) var(--l), transparent 0) left bottom,
+        linear-gradient(to left, var(--c) var(--l), transparent 0) right bottom,
+        linear-gradient(to top, var(--c) var(--l), transparent 0) right bottom;
+    background-repeat: no-repeat;
+    background-size: var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.skill-item:hover {
+    background: rgba(207, 143, 82, 0.15);
+    transform: translateX(-4px);
+}
+
+.skills-section.visible .skill-item {
+    animation: skillItemIn 0.4s ease-out forwards;
+}
+
+.skills-section.visible .skill-item:nth-child(2) { animation-delay: 0.15s; }
+.skills-section.visible .skill-item:nth-child(3) { animation-delay: 0.25s; }
+.skills-section.visible .skill-item:nth-child(4) { animation-delay: 0.35s; }
+.skills-section.visible .skill-item:nth-child(5) { animation-delay: 0.45s; }
+.skills-section.visible .skill-item:nth-child(6) { animation-delay: 0.55s; }
+.skills-section.visible .skill-item:nth-child(7) { animation-delay: 0.65s; }
+.skills-section.visible .skill-item:nth-child(8) { animation-delay: 0.75s; }
+.skills-section.visible .skill-item:nth-child(9) { animation-delay: 0.85s; }
+.skills-section.visible .skill-item:nth-child(10) { animation-delay: 0.95s; }
+.skills-section.visible .skill-item:nth-child(11) { animation-delay: 1.05s; }
+
+@keyframes skillItemIn {
+    0% { opacity: 0; transform: translateX(-20px); }
+    100% { opacity: 1; transform: translateX(0); }
+}
+
+.skill-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.skill-icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    color: rgb(207, 143, 82);
+}
+
+.skill-name {
+    font-family: "Minecraft", sans-serif;
+    font-size: 20px;
+    color: rgb(207, 143, 82);
+    white-space: nowrap;
+}
+
+/* ---- SKILL BARS ---- */
+.skill-bars {
+    display: flex;
+    gap: 6px;
+    align-items: flex-end;
+}
+
+.skill-bars .bar {
+    display: block;
+    width: 18px;
+    height: 28px;
+    border-radius: 0;
+    opacity: 0.15;
+    transition: opacity 0.3s ease;
+    background: #888;
+}
+
+.skill-item[data-level="1"] .bar:nth-child(-n+1) {
+    opacity: 1;
+    background-color: #888;
+    animation-name: skillCharge1;
+    animation-duration: 1.2s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+}
+
+.skill-item[data-level="2"] .bar:nth-child(-n+2) {
+    opacity: 1;
+    animation-name: skillCharge2, skillGoldPulse;
+    animation-duration: 1.5s, 2s;
+    animation-timing-function: ease-out, ease-in-out;
+    animation-fill-mode: forwards, none;
+    animation-iteration-count: 1, infinite;
+}
+
+.skill-item[data-level="2"] .bar:nth-child(2) {
+    animation-delay: 0.3s, 1.8s;
+}
+
+.skill-item[data-level="3"] .bar:nth-child(-n+3) {
+    opacity: 1;
+    animation-name: skillCharge3, skillRedPulse;
+    animation-duration: 2s, 1.5s;
+    animation-timing-function: ease-out, ease-in-out;
+    animation-fill-mode: forwards, none;
+    animation-iteration-count: 1, infinite;
+}
+
+.skill-item[data-level="3"] .bar:nth-child(2) {
+    animation-delay: 0.3s, 2.3s;
+}
+
+.skill-item[data-level="3"] .bar:nth-child(3) {
+    animation-delay: 0.6s, 2.6s;
+}
+
+.skill-item[data-level="4"] .bar:nth-child(-n+4) {
+    opacity: 1;
+    animation-name: skillCharge4, skillPowerPulse;
+    animation-duration: 2.5s, 1.5s;
+    animation-timing-function: ease-out, ease-in-out;
+    animation-fill-mode: forwards, none;
+    animation-iteration-count: 1, infinite;
+}
+
+.skill-item[data-level="4"] .bar:nth-child(2) {
+    animation-delay: 0.3s, 2.8s;
+}
+
+.skill-item[data-level="4"] .bar:nth-child(3) {
+    animation-delay: 0.6s, 3.1s;
+}
+
+.skill-item[data-level="4"] .bar:nth-child(4) {
+    animation-delay: 0.9s, 3.4s;
+}
+
+.skill-item[data-level="5"] .bar:nth-child(-n+5) {
+    opacity: 1;
+    animation-name: skillCharge5, skillBarCycle;
+    animation-duration: 3s, 0.6s;
+    animation-timing-function: ease-out, ease-in-out;
+    animation-fill-mode: forwards, none;
+    animation-iteration-count: 1, infinite;
+}
+
+.skill-item[data-level="5"] .bar:nth-child(2) {
+    animation-delay: 0.3s, 3.3s;
+}
+
+.skill-item[data-level="5"] .bar:nth-child(3) {
+    animation-delay: 0.6s, 3.6s;
+}
+
+.skill-item[data-level="5"] .bar:nth-child(4) {
+    animation-delay: 0.9s, 3.9s;
+}
+
+.skill-item[data-level="5"] .bar:nth-child(5) {
+    animation-delay: 1.2s, 4.2s;
+}
+
+@keyframes skillCharge1 {
+    0% { background-color: #888; opacity: 0.3; }
+    100% { background-color: #888; opacity: 1; }
+}
+
+@keyframes skillCharge2 {
+    0% { background-color: #888; opacity: 0.3; }
+    50% { background-color: #888; opacity: 0.6; }
+    100% { background-color: rgb(207, 143, 82); opacity: 1; }
+}
+
+@keyframes skillCharge3 {
+    0% { background-color: #888; opacity: 0.3; }
+    33% { background-color: #888; opacity: 0.5; }
+    66% { background-color: rgb(207, 143, 82); opacity: 0.8; }
+    100% { background-color: #e74c3c; opacity: 1; }
+}
+
+@keyframes skillCharge4 {
+    0% { background-color: #888; opacity: 0.3; }
+    25% { background-color: #888; opacity: 0.5; }
+    50% { background-color: rgb(207, 143, 82); opacity: 0.7; }
+    75% { background-color: #e74c3c; opacity: 0.9; }
+    100% { background-color: #9b59b6; opacity: 1; }
+}
+
+@keyframes skillCharge5 {
+    0% { background-color: #888; opacity: 0.3; }
+    20% { background-color: #888; opacity: 0.5; }
+    40% { background-color: rgb(207, 143, 82); opacity: 0.7; }
+    60% { background-color: #e74c3c; opacity: 0.9; }
+    80% { background-color: #9b59b6; opacity: 1; }
+    100% { background-color: rgb(207, 143, 82); opacity: 1; }
+}
+
+@keyframes skillBarCycle {
+    0% { background-color: rgb(207, 143, 82); }
+    10% { background-color: white; }
+    20% { background-color: #aaa; }
+    30% { background-color: #e74c3c; }
+    40% { background-color: #9b59b6; }
+    50% { background-color: rgb(207, 143, 82); }
+    100% { background-color: rgb(207, 143, 82); }
+}
+
+@keyframes skillGoldPulse {
+    0%, 100% {
+        background-color: rgb(207, 143, 82);
+        box-shadow: 0 0 4px rgba(207, 143, 82, 0.3);
+    }
+    50% {
+        background-color: #e8be8a;
+        box-shadow: 0 0 12px rgba(207, 143, 82, 0.7);
+    }
+}
+
+@keyframes skillRedPulse {
+    0%, 100% {
+        background-color: #e74c3c;
+        box-shadow: 0 0 6px rgba(231, 76, 60, 0.4);
+    }
+    50% {
+        background-color: #f1948a;
+        box-shadow: 0 0 16px rgba(231, 76, 60, 0.8);
+    }
+}
+
+@keyframes skillPowerPulse {
+    0%, 100% {
+        background-color: #9b59b6;
+        box-shadow: 0 0 6px rgba(155, 89, 182, 0.4);
+    }
+    50% {
+        background-color: #c39bd3;
+        box-shadow: 0 0 16px rgba(155, 89, 182, 0.8);
+    }
+}
+
+/* ---- SKILLS IMAGE ---- */
+.skills-image {
+    flex-shrink: 0;
+}
+
+.skills-image-wrapper {
+    position: relative;
+    width: 330px;
+    height: 440px;
+    border-radius: 0;
+    overflow: hidden;
+    border: 3px solid rgb(207, 143, 82);
+    box-shadow: 0 0 30px rgba(207, 143, 82, 0.3);
+}
+
+.skills-image-wrapper img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.img-pixel {
+    z-index: 2;
+}
+
+.img-real {
+    z-index: 1;
+}
+
+.skills-section.visible .img-pixel {
+    animation: pixelSwap 7s ease-in-out infinite;
+}
+
+.skills-section.visible .img-real {
+    animation: realSwap 7s ease-in-out infinite;
+}
+
+@keyframes pixelSwap {
+    0%, 70% { opacity: 0; }
+    75% { opacity: 1; }
+    95% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@keyframes realSwap {
+    0%, 70% { opacity: 1; }
+    75% { opacity: 0; }
+    95% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* ---- MYSTICAL ENERGY EFFECTS ---- */
+.sparkle-container {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgb(207, 143, 82);
+    border-radius: 50%;
+    opacity: 0;
+    box-shadow: 0 0 10px rgb(207, 143, 82), 0 0 20px rgba(155, 89, 182, 0.4);
+    animation: sparkleFloat 5s ease-in-out infinite;
+}
+
+@keyframes sparkleFloat {
+    0%, 100% { opacity: 0; transform: translateY(0) scale(0.3); }
+    10% { opacity: 1; }
+    50% { opacity: 0.4; transform: translateY(-80px) scale(1.5); }
+    90% { opacity: 0.8; }
+    100% { opacity: 0; transform: translateY(-150px) scale(0.3); }
+}
+
+/* Energy orb at bottom center */
+.energy-orb {
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(circle, rgba(155, 89, 182, 0.12) 0%, rgba(100, 50, 150, 0.06) 30%, transparent 60%);
+    pointer-events: none;
+    z-index: 1;
+    animation: orbPulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes orbPulse {
+    0% { transform: translateX(-50%) scale(0.8); opacity: 0.5; }
+    100% { transform: translateX(-50%) scale(1.3); opacity: 1; }
+}
+
+/* Floating energy bolts */
+.energy-bolt {
+    position: absolute;
+    width: 2px;
+    background: linear-gradient(to top, transparent, rgb(207, 143, 82), rgba(155, 89, 182, 0.6), transparent);
+    border-radius: 2px;
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+    animation: boltRise 3s ease-out infinite;
+}
+
+.energy-bolt:nth-child(1) { left: 10%; height: 120px; animation-delay: 0s; }
+.energy-bolt:nth-child(2) { left: 25%; height: 80px; animation-delay: 1s; }
+.energy-bolt:nth-child(3) { left: 45%; height: 100px; animation-delay: 0.5s; }
+.energy-bolt:nth-child(4) { left: 60%; height: 90px; animation-delay: 1.5s; }
+.energy-bolt:nth-child(5) { left: 75%; height: 110px; animation-delay: 2s; }
+.energy-bolt:nth-child(6) { left: 90%; height: 70px; animation-delay: 0.8s; }
+
+@keyframes boltRise {
+    0% { opacity: 0; bottom: 0; transform: scaleY(0); }
+    20% { opacity: 0.6; }
+    50% { opacity: 0.3; bottom: 50%; transform: scaleY(1.5); }
+    80% { opacity: 0.6; }
+    100% { opacity: 0; bottom: 100%; transform: scaleY(0); }
+}
+
+/* Purple mist overlay */
+.mist-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 100%, rgba(100, 50, 150, 0.06) 0%, transparent 50%);
+    z-index: 1;
+    pointer-events: none;
+    animation: mistWave 6s ease-in-out infinite alternate;
+}
+
+@keyframes mistWave {
+    0% { opacity: 0.3; }
+    100% { opacity: 0.8; }
+}
+
+/* ---- PROJECTS GRID ---- */
+.ProyectsConteiner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 60px;
+}
+
+.projects-grid {
+    width: 100%;
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(480px, 100%), 1fr));
+    gap: 40px;
+    padding: 40px 20px 100px;
+    position: relative;
+    z-index: 2;
+    justify-items: center;
+}
+
+/* ---- PROJECT CARD ---- */
+.project-card {
+    position: relative;
+    background: transparent;
+    min-height: 400px;
+    padding: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.project-card.visible {
+    opacity: 1;
+}
+
+/* Corner brackets via ::before */
+.project-card::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    --c: rgb(207, 143, 82);
+    --t: 2px;
+    --l: 28px;
+    background:
+        linear-gradient(to right, var(--c) var(--l), transparent 0) left top,
+        linear-gradient(to bottom, var(--c) var(--l), transparent 0) left top,
+        linear-gradient(to left, var(--c) var(--l), transparent 0) right top,
+        linear-gradient(to bottom, var(--c) var(--l), transparent 0) right top,
+        linear-gradient(to right, var(--c) var(--l), transparent 0) left bottom,
+        linear-gradient(to top, var(--c) var(--l), transparent 0) left bottom,
+        linear-gradient(to left, var(--c) var(--l), transparent 0) right bottom,
+        linear-gradient(to top, var(--c) var(--l), transparent 0) right bottom;
+    background-repeat: no-repeat;
+    background-size: 0 var(--t), var(--t) 0,
+                     0 var(--t), var(--t) 0,
+                     0 var(--t), var(--t) 0,
+                     0 var(--t), var(--t) 0;
+    transition: background-size 0.8s ease-out;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.project-card.visible::before {
+    background-size: var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l);
+}
+
+/* ---- CARD CONTENT ---- */
+.card-content {
+    position: relative;
+    z-index: 2;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.card-content > * {
+    opacity: 0;
+    transform: translateY(-30px);
+}
+
+.project-card.visible .card-title {
+    animation: fadeFallIn 0.5s ease-out 0.9s forwards;
+}
+
+.project-card.visible .card-desc {
+    animation: fadeFallIn 0.5s ease-out 1.05s forwards;
+}
+
+.project-card.visible .tech-label {
+    animation: fadeFallIn 0.5s ease-out 1.2s forwards;
+}
+
+.project-card.visible .tech-stack {
+    animation: fadeFallIn 0.5s ease-out 1.3s forwards;
+}
+
+.project-card.visible .learned-label {
+    animation: fadeFallIn 0.5s ease-out 1.4s forwards;
+}
+
+.project-card.visible .learned-list {
+    animation: fadeFallIn 0.5s ease-out 1.5s forwards;
+}
+
+.project-card.visible .card-buttons {
+    animation: fadeFallIn 0.5s ease-out 1.6s forwards;
+}
+
+@keyframes fadeFallIn {
+    0% { opacity: 0; transform: translateY(-30px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- CARD TITLE & DESCRIPTION ---- */
+.card-title {
+    font-family: "Minecraft", sans-serif;
+    font-size: 28px;
+    color: rgb(207, 143, 82);
+    margin: 0 0 10px 0;
+}
+
+.card-desc {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 20px;
+    color: rgb(207, 143, 82);
+    line-height: 1.5;
+    margin: 0 0 24px 0;
+}
+
+/* ---- SECTION LABEL ---- */
+.card-section-label {
+    display: block;
+    font-family: "Minecraft", sans-serif;
+    font-size: 15px;
+    color: rgb(207, 143, 82);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+/* ---- TECH STACK ---- */
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.tech-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: "Minecraft", sans-serif;
+    font-size: 13px;
+    color: rgb(207, 143, 82);
+    padding: 5px 12px 5px 8px;
+    border: 1px solid rgba(207, 143, 82, 0.35);
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.45);
+    white-space: nowrap;
+}
+
+.tech-item svg {
+    flex-shrink: 0;
+    transition: fill 0.25s ease, stroke 0.25s ease;
+}
+
+.tech-item:hover {
+    background: rgb(207, 143, 82);
+    color: #000;
+    border-color: rgb(207, 143, 82);
+}
+
+/* ---- LEARNED LIST ---- */
+.learned-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 28px 0;
+}
+
+.learned-list li {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 18px;
+    color: rgb(207, 143, 82);
+    padding: 5px 0 5px 22px;
+    position: relative;
+    line-height: 1.4;
+}
+
+.learned-list li::before {
+    content: '\25B8';
+    position: absolute;
+    left: 0;
+    color: rgb(207, 143, 82);
+}
+
+/* ---- CARD BUTTONS ---- */
+.card-buttons {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.btn-card {
+    display: inline-block;
+    padding: 10px 24px;
+    font-family: "Minecraft", sans-serif;
+    font-size: 14px;
+    color: rgb(207, 143, 82);
+    text-decoration: none;
+    border: 2px solid rgb(207, 143, 82);
+    background: transparent;
+    transition: background 0.3s ease, color 0.3s ease;
+    cursor: url("cursorset/sm_Link.cur"), pointer;
+}
+
+.btn-card:hover {
+    background: rgb(207, 143, 82);
+    color: #000;
+}
+
+/* ---- ABOUT ME SECTION ---- */
+.about-section {
+    min-height: 100vh;
+    background-image: url("Pics/aboutmeBackground.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 120px 20px 60px;
+    position: relative;
+    overflow: hidden;
+}
+
+.about-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(to bottom, #000 0%, transparent 100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.about-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(to top, #000 0%, transparent 100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.about-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 0;
+}
+
+.about-section > h1 {
+    position: relative;
+    z-index: 2;
+    font-family: "Minecraft", sans-serif;
+    font-size: 52px;
+    color: rgb(207, 143, 82);
+    text-align: center;
+    margin: 0 0 50px;
+    padding: 20px 45px;
+    display: inline-block;
+    opacity: 0;
+    --c: rgb(207, 143, 82);
+    --t: 5px;
+    --l: 30px;
+    background:
+        linear-gradient(to right, var(--c) var(--l), transparent 0) left top,
+        linear-gradient(to bottom, var(--c) var(--l), transparent 0) left top,
+        linear-gradient(to left, var(--c) var(--l), transparent 0) right top,
+        linear-gradient(to bottom, var(--c) var(--l), transparent 0) right top,
+        linear-gradient(to right, var(--c) var(--l), transparent 0) left bottom,
+        linear-gradient(to top, var(--c) var(--l), transparent 0) left bottom,
+        linear-gradient(to left, var(--c) var(--l), transparent 0) right bottom,
+        linear-gradient(to top, var(--c) var(--l), transparent 0) right bottom;
+    background-repeat: no-repeat;
+    background-size: var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l);
+}
+
+.about-section.visible > h1 {
+    animation: titleFadeIn 0.5s ease-out forwards,
+               titleColorCycle 5s ease-in-out 0.5s infinite,
+               titlePulse 3s ease-in-out 0.5s infinite;
+}
+
+.about-container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    max-width: 700px;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.about-section.visible .about-container {
+    animation: skillsFadeIn 0.8s ease-out forwards;
+}
+
+.about-carousel {
+    position: relative;
+    width: 100%;
+    min-height: 360px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* ---- ABOUT CARD (CAROUSEL ITEM) ---- */
+.about-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 50px 40px;
+    background: rgba(0, 0, 0, 0.4);
+    text-align: center;
+    pointer-events: none;
+    box-sizing: border-box;
+    opacity: 0;
+    transform: translateX(-100%);
+}
+
+.about-card.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+}
+
+.about-card.exit-left {
+    animation: slideOutLeft 0.5s ease-in forwards;
+}
+
+.about-card.exit-right {
+    animation: slideOutRight 0.5s ease-in forwards;
+}
+
+.about-card.enter-left {
+    animation: slideInLeft 0.5s ease-out forwards;
+}
+
+.about-card.enter-right {
+    animation: slideInRight 0.5s ease-out forwards;
+}
+
+@keyframes slideOutLeft {
+    0% { opacity: 1; transform: translateX(0); }
+    100% { opacity: 0; transform: translateX(-100%); }
+}
+
+@keyframes slideInRight {
+    0% { opacity: 0; transform: translateX(100%); }
+    100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideOutRight {
+    0% { opacity: 1; transform: translateX(0); }
+    100% { opacity: 0; transform: translateX(100%); }
+}
+
+@keyframes slideInLeft {
+    0% { opacity: 0; transform: translateX(-100%); }
+    100% { opacity: 1; transform: translateX(0); }
+}
+
+.about-card::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    --c: rgb(207, 143, 82);
+    --t: 3px;
+    --l: 20px;
+    background:
+        linear-gradient(to right, var(--c) var(--l), transparent 0) left top,
+        linear-gradient(to bottom, var(--c) var(--l), transparent 0) left top,
+        linear-gradient(to left, var(--c) var(--l), transparent 0) right top,
+        linear-gradient(to bottom, var(--c) var(--l), transparent 0) right top,
+        linear-gradient(to right, var(--c) var(--l), transparent 0) left bottom,
+        linear-gradient(to top, var(--c) var(--l), transparent 0) left bottom,
+        linear-gradient(to left, var(--c) var(--l), transparent 0) right bottom,
+        linear-gradient(to top, var(--c) var(--l), transparent 0) right bottom;
+    background-repeat: no-repeat;
+    background-size: var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l),
+                     var(--l) var(--t), var(--t) var(--l);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.about-card:hover {
+    background: rgba(207, 143, 82, 0.1);
+}
+
+/* ---- ABOUT ARROWS ---- */
+.about-arrow {
+    flex-shrink: 0;
+    background: none;
+    border: 2px solid rgb(207, 143, 82);
+    color: rgb(207, 143, 82);
+    font-size: 24px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: url("cursorset/sm_Link.cur"), pointer;
+    transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+    padding: 0;
+    line-height: 1;
+}
+
+.about-arrow:hover {
+    background: rgb(207, 143, 82);
+    color: #000;
+    transform: scale(1.1);
+}
+
+.about-icon {
+    display: block;
+    margin-bottom: 20px;
+    line-height: 1;
+    color: rgb(207, 143, 82);
+}
+
+.about-icon svg {
+    display: block;
+    margin: 0 auto;
+    width: 64px;
+    height: 64px;
+}
+
+.about-title {
+    font-family: "Minecraft", sans-serif;
+    font-size: 32px;
+    color: rgb(207, 143, 82);
+    margin: 0 0 18px;
+}
+
+.about-desc {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 24px;
+    color: rgb(207, 143, 82);
+    line-height: 1.5;
+    margin: 0 auto;
+    max-width: 550px;
+}
+
+/* ---- FOOTER ---- */
+.footer-section {
+    background: #000;
+    border-top: 2px solid rgb(207, 143, 82);
+    padding: 30px 20px 20px;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.footer-contact {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.footer-link {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 18px;
+    color: rgb(207, 143, 82);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.25s ease;
+    cursor: url("cursorset/sm_Link.cur"), pointer;
+}
+
+.footer-link:hover {
+    color: #fff;
+}
+
+.footer-social {
+    display: flex;
+    gap: 14px;
+}
+
+.footer-social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    transition: transform 0.3s ease, background 0.3s ease;
+    cursor: url("cursorset/sm_Link.cur"), pointer;
+}
+
+.footer-social-icon svg {
+    fill: rgb(207, 143, 82);
+    display: block;
+}
+
+.footer-social-icon:hover {
+    transform: scale(1.3);
+    background: rgba(207, 143, 82, 0.15);
+}
+
+.cv-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+}
+
+.cv-wrapper .social-icon,
+.cv-wrapper .footer-social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.cv-arrow {
+    position: absolute;
+    bottom: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: "Minecraft", sans-serif;
+    font-size: 12px;
+    color: rgb(207, 143, 82);
+    white-space: nowrap;
+    animation: cvBounce 1.5s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes cvBounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-6px); }
+}
+
+.footer-copy {
+    font-family: "Minecraft", sans-serif;
+    font-size: 14px;
+    color: rgba(207, 143, 82, 0.5);
+    margin: 24px 0 0;
+    letter-spacing: 1px;
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 600px) {
+    .projects-grid {
+        padding: 20px 16px 80px;
+    }
+
+    .card-title {
+        font-size: 24px;
+    }
+
+    .card-desc {
+        font-size: 18px;
+    }
+
+    .tech-stack {
+        gap: 8px;
+    }
+
+    .tech-item {
+        font-size: 12px;
+        padding: 4px 10px 4px 6px;
+    }
+
+    .card-buttons {
+        flex-direction: column;
+    }
+
+    .btn-card {
+        text-align: center;
+    }
+}
+
+@media (max-width: 700px) {
+    .about-container {
+        gap: 10px;
+    }
+
+    .about-card {
+        padding: 36px 24px;
+    }
+
+    .about-arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+
+    .about-section > h1 {
+        font-size: 40px;
+        padding: 14px 30px;
+    }
+
+    .about-title {
+        font-size: 26px;
+    }
+
+    .about-desc {
+        font-size: 20px;
+    }
+
+    .about-icon {
+        font-size: 52px;
+    }
+
+    .about-carousel {
+        min-height: 320px;
+    }
+}
