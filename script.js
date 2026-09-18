@@ -1,9 +1,9 @@
 // ---- HERO ENTRANCE SEQUENCE ----
-// Photo appears at viewport center, then moves to its flex position.
-// All subsequent text/button animations are chained via JS so they
-// stay in sync regardless of image load time.
-window.addEventListener('load', () => {
+// Start as soon as the DOM is ready so external resources cannot block the sequence.
+const startHeroEntrance = () => {
     const img = document.querySelector('.hero-image img');
+    if (!img) return;
+
     const rect = img.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
@@ -18,58 +18,83 @@ window.addEventListener('load', () => {
     const seeMoreText = document.querySelector('.see-more-text');
     const musicBtnImg = document.querySelector('#music-btn img');
     const workBtn = document.querySelector('#work-btn');
+    const musicHint = document.querySelector('.music-hint');
+
+    const revealAll = () => {
+        img.style.opacity = '1';
+        img.style.transform = 'translate(0, 0) scale(1)';
+        img.style.borderColor = 'white';
+        heroQuote?.classList.add('visible');
+        quoteName?.classList.add('visible');
+        quoteTitle?.classList.add('visible');
+        quoteText?.classList.add('visible');
+        seeMoreArrow?.classList.add('visible');
+        seeMoreText?.classList.add('visible');
+        musicHint?.classList.add('visible');
+        musicBtnImg?.classList.add('visible');
+        workBtn?.classList.add('visible');
+    };
 
     // 1) Jump photo to viewport center and fade in
     setTimeout(() => {
-        img.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(1.35)`;
+        img.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(1.18)`;
         img.style.borderColor = 'transparent';
 
         requestAnimationFrame(() => {
-            img.style.transition = 'opacity 0.3s ease-out';
+            img.style.transition = 'opacity 0.32s ease-out';
             img.style.opacity = '1';
 
             // 2) Wait, then slide photo into its flex position
             setTimeout(() => {
-                img.style.transition = 'transform 0.6s ease-out 0.1s, border-color 0.6s ease-out 0.1s';
+                img.style.transition = 'transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.45s ease-out';
                 img.style.transform = 'translate(0, 0) scale(1)';
-                img.style.borderColor = 'rgba(0, 0, 0, 0.6)';
+                img.style.borderColor = 'white';
 
                 // 3) Chain all remaining animations relative to this point
                 setTimeout(() => {
-                    heroQuote.classList.add('visible');
-                }, 400);
+                    heroQuote?.classList.add('visible');
+                }, 120);
 
                 setTimeout(() => {
-                    quoteName.classList.add('visible');
-                }, 600);
+                    quoteName?.classList.add('visible');
+                }, 220);
 
                 setTimeout(() => {
-                    quoteTitle.classList.add('visible');
-                }, 700);
+                    quoteTitle?.classList.add('visible');
+                }, 320);
 
                 setTimeout(() => {
-                    quoteText.classList.add('visible');
-                }, 800);
+                    quoteText?.classList.add('visible');
+                }, 420);
 
                 setTimeout(() => {
-                    seeMoreArrow.classList.add('visible');
-                }, 1000);
+                    seeMoreArrow?.classList.add('visible');
+                }, 550);
 
                 setTimeout(() => {
-                    seeMoreText.classList.add('visible');
-                }, 1200);
+                    seeMoreText?.classList.add('visible');
+                }, 650);
 
                 // Music hint, music button and work button appear
                 setTimeout(() => {
-                    document.querySelector('.music-hint').classList.add('visible');
-                    musicBtnImg.classList.add('visible');
-                    workBtn.classList.add('visible');
-                }, 1400);
+                    musicHint?.classList.add('visible');
+                    musicBtnImg?.classList.add('visible');
+                    workBtn?.classList.add('visible');
+                }, 760);
 
-            }, 200);
+            }, 80);
         });
-    }, 500);
-});
+    }, 50);
+
+    // Ensure content never remains hidden if a browser interrupts a transition.
+    setTimeout(revealAll, 1600);
+};
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startHeroEntrance, { once: true });
+} else {
+    startHeroEntrance();
+}
 
 // ---- NAVBAR SCROLL TRANSPARENCY ----
 // Transparent at top, gets background when scrolled past hero
@@ -85,13 +110,6 @@ if (navbar) {
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
 }
-
-// ---- NAVBAR FALL-DOWN ANIMATION ----
-// Each link falls from above with a staggered delay
-document.querySelectorAll('.listClass a:not(#music-btn)').forEach((link, i) => {
-    link.style.animation = `fallDown 0.5s ease-out ${i * 0.15}s forwards`;
-    link.style.opacity = '0';
-});
 
 // ---- BACKGROUND MUSIC TOGGLE ----
 // Click the music button to play/pause Minecraft Calm 2

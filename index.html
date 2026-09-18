@@ -13,7 +13,7 @@
 <body>
     <!-- Full-page background container (landscape.png) -->
     <div class="bg-container">
-        <!-- Navigation bar with fall-down animation links -->
+        <!-- Main navigation bar -->
         <nav class="NavbarMain">
             <ul class="listClass">
                 <li><a href="#about-me">About Me</a></li>
@@ -21,7 +21,7 @@
                 <li><a href="#Projects">Projects</a></li>
                 <li><a href="#goals">Goals</a></li>
                 <li><a href="#soft-skills">Skills</a></li>
-                <li><a href="#">CV</a></li>
+                <li><a href="Alex%20Araya%20Chavarria.pdf" target="_blank" rel="noopener">CV</a></li>
             </ul>
         </nav>
         <!-- Hero section: photo + quote + buttons + social icons -->
@@ -33,9 +33,9 @@
                 </div>
                 <!-- Quote text that extends horizontally then individual lines fall in -->
                 <div class="hero-quote">
-                    <h1 class="quote-name">Hi, I'm Alex</h1>
+                    <h1 class="quote-name">Hello, I’m Alex</h1>
                     <p class="quote-title">Aspiring Full Stack Developer</p>
-                    <span class="quote-text">"Never been a fan of structure as a kid... guess that's why I became a programmer."</span>
+                    <span class="quote-text">Software developer passionate about technology, learning, and building useful projects. I enjoy solving problems and turning ideas into real solutions. My goal is to grow as a professional and become an entrepreneur.</span>
                 </div>
             </div>
             <!-- Music toggle and work button -->
@@ -47,7 +47,7 @@
                 <a href="#Projects" id="work-btn">My Work</a>
             </div>
             <!-- "See more" down-arrow link -->
-            <a href="#" class="see-more">
+            <a href="#Projects" class="see-more">
                 <span class="see-more-arrow">↓</span>
                 <span class="see-more-text">see more</span>
             </a>
@@ -61,7 +61,7 @@
                 </a>
                 <div class="cv-wrapper">
                     <span class="cv-arrow">↓ this is my CV</span>
-                    <a href="#" class="social-icon">
+                    <a href="Alex%20Araya%20Chavarria.pdf" class="social-icon" aria-label="CV" target="_blank" rel="noopener">
                         <svg viewBox="0 0 24 24" width="22" height="22"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 13H6v-2h12v2zm0-4H6v-2h12v2zm0-4H6V6h12v2z"/></svg>
                     </a>
                 </div>
@@ -71,6 +71,13 @@
     <div class="ProyectsConteiner" id="Projects">
         <div class="fire-glow"></div>
         <div class="ground-glow"></div>
+        <div class="campfire-smoke" aria-hidden="true">
+            <span style="--offset: -28px; --drift: -45px; --size: 42px; --delay: -1s; --duration: 6s;"></span>
+            <span style="--offset: 8px; --drift: 38px; --size: 55px; --delay: -4s; --duration: 7.5s;"></span>
+            <span style="--offset: 30px; --drift: -25px; --size: 36px; --delay: -2.5s; --duration: 6.5s;"></span>
+            <span style="--offset: -5px; --drift: 52px; --size: 48px; --delay: -6s; --duration: 8s;"></span>
+            <span style="--offset: 20px; --drift: -55px; --size: 32px; --delay: -5s; --duration: 7s;"></span>
+        </div>
         <h1>My Work</h1>
         <div class="projects-grid">
             <div class="project-card">
@@ -132,7 +139,7 @@
                     </ul>
 
                     <div class="card-buttons">
-                        <a href="#" class="btn-card">View Project</a>
+                        <a href="salud-y-armonia.html" class="btn-card">View Project</a>
                         <a href="https://github.com/AlexAraC/Proyecto-Salud-y-Armon-a-.git" class="btn-card btn-github" target="_blank">GitHub Code</a>
                     </div>
                 </div>
@@ -186,7 +193,7 @@
                     </ul>
 
                     <div class="card-buttons">
-                        <a href="#" class="btn-card">View Project</a>
+                        <a href="panaderia-platanar.html" class="btn-card">View Project</a>
                         <a href="https://github.com/AlexAraC/Panaderia-Platanar.git" class="btn-card btn-github" target="_blank">GitHub Code</a>
                     </div>
                 </div>
@@ -196,6 +203,16 @@
     <div class="technologies-section" id="technologies">
         <div class="tech-overlay"></div>
         <div class="crystal-glow"></div>
+        <div class="tech-energy" aria-hidden="true">
+            <span style="--left: 7%; --delay: -1s; --duration: 7s; --height: 90px;"></span>
+            <span style="--left: 18%; --delay: -5s; --duration: 9s; --height: 130px;"></span>
+            <span style="--left: 31%; --delay: -3s; --duration: 8s; --height: 75px;"></span>
+            <span style="--left: 43%; --delay: -7s; --duration: 10s; --height: 115px;"></span>
+            <span style="--left: 56%; --delay: -2s; --duration: 8.5s; --height: 140px;"></span>
+            <span style="--left: 68%; --delay: -6s; --duration: 9.5s; --height: 85px;"></span>
+            <span style="--left: 81%; --delay: -4s; --duration: 7.5s; --height: 120px;"></span>
+            <span style="--left: 93%; --delay: -8s; --duration: 10.5s; --height: 100px;"></span>
+        </div>
         <h1>Technologies</h1>
         <p class="tech-magic">✦ Magic Power ✦</p>
         <div class="magic-grid">
@@ -333,6 +350,7 @@
                     <img src="Pics/PixelMe.png" alt="pixel me" class="img-pixel">
                     <img src="Pics/me.jpg" alt="me" class="img-real">
                 </div>
+                <p class="skills-description">I stand out for my curiosity, problem-solving mindset, and willingness to learn. Rather than simply using a technology, I like understanding how and why it works. I’m comfortable learning new tools when a project requires them and turning challenges into opportunities to improve.</p>
             </div>
         </div>
     </div>
@@ -341,16 +359,28 @@
         <h1>Goals</h1>
         <div class="goals-container">
             <div class="goal-card">
-                <h2 class="goal-title">Master Full Stack Development</h2>
-                <p class="goal-desc">Deepen expertise in both frontend and backend technologies to build complete, scalable web applications.</p>
+                <h2 class="goal-title">🚀 Build My Own Products</h2>
+                <p class="goal-desc">Turn ideas into useful digital products and develop them into real businesses.</p>
             </div>
             <div class="goal-card">
-                <h2 class="goal-title">Contribute to Open Source</h2>
-                <p class="goal-desc">Give back to the developer community by contributing to meaningful open source projects.</p>
+                <h2 class="goal-title">🧠 Master Backend Development</h2>
+                <p class="goal-desc">Strengthen my knowledge of APIs, databases, architecture, security, and scalable backend systems.</p>
             </div>
             <div class="goal-card">
-                <h2 class="goal-title">Build a Personal Brand</h2>
-                <p class="goal-desc">Share knowledge through blog posts, tutorials, and speaking engagements to inspire other developers.</p>
+                <h2 class="goal-title">💼 Grow as a Professional</h2>
+                <p class="goal-desc">Gain real-world experience, work with talented people, and continuously improve as a software developer.</p>
+            </div>
+            <div class="goal-card">
+                <h2 class="goal-title">🔐 Explore Cybersecurity</h2>
+                <p class="goal-desc">Develop a deeper understanding of application security and build safer software from the ground up.</p>
+            </div>
+            <div class="goal-card">
+                <h2 class="goal-title">🌎 Create Real-World Impact</h2>
+                <p class="goal-desc">Use technology to solve practical problems and create solutions that provide real value to people.</p>
+            </div>
+            <div class="goal-card">
+                <h2 class="goal-title">🤝 Build Meaningful Connections</h2>
+                <p class="goal-desc">Meet developers, entrepreneurs, and people who share ideas, knowledge, and a passion for building things.</p>
             </div>
         </div>
     </div>
@@ -384,7 +414,7 @@
                         </svg>
                     </span>
                     <h2 class="about-title">Who I Am</h2>
-                    <p class="about-desc">A passionate software developer who loves building functional web applications with carefully crafted design. I enjoy learning new technologies and turning ideas into real solutions.</p>
+                    <p class="about-desc">I’m a software developer who enjoys building things, solving problems, and continuously learning. I’m especially interested in backend development, software architecture, and creating useful digital solutions.</p>
                 </div>
                 <div class="about-card" data-index="1">
                     <span class="about-icon">
@@ -399,7 +429,7 @@
                         </svg>
                     </span>
                     <h2 class="about-title">What I Like</h2>
-                    <p class="about-desc">Full Stack development, interface design, and creating applications that deliver a great user experience. I always aim to write clean code and keep improving my skills.</p>
+                    <p class="about-desc">I like programming, technology, and challenging myself with projects that push me to learn something new. I also enjoy turning ideas into real, functional products and exploring how technology can solve everyday problems.</p>
                 </div>
                 <div class="about-card" data-index="2">
                     <span class="about-icon">
@@ -415,7 +445,7 @@
                         </svg>
                     </span>
                     <h2 class="about-title">My Philosophy</h2>
-                    <p class="about-desc">Constant learning and curiosity are a developer's most important tools. Every project is an opportunity to grow and take on new challenges.</p>
+                    <p class="about-desc">My philosophy is to keep developing myself both as a professional and as a person. I believe that growth comes from building, making mistakes, learning from them, and constantly improving. I want to combine my career with entrepreneurship, creating solutions that have real value.</p>
                 </div>
                 <div class="about-card" data-index="3">
                     <span class="about-icon">
@@ -431,7 +461,7 @@
                         </svg>
                     </span>
                     <h2 class="about-title">My Goal</h2>
-                    <p class="about-desc">Looking for opportunities to grow professionally, collaborate on interesting projects, and deliver quality solutions while continuing to expand my knowledge.</p>
+                    <p class="about-desc">My goal is to become a strong software professional while developing the skills and experience needed to build my own projects and businesses. I want to keep learning, create things I can be proud of, and eventually build a career that gives me both professional growth and independence.</p>
                 </div>
             </div>
             <button class="about-arrow about-arrow-right">▶</button>
@@ -458,7 +488,7 @@
                 </a>
                 <div class="cv-wrapper">
                     <span class="cv-arrow">↓ this is my CV</span>
-                    <a href="#" class="footer-social-icon" aria-label="CV">
+                    <a href="Alex%20Araya%20Chavarria.pdf" class="footer-social-icon" aria-label="CV" target="_blank" rel="noopener">
                     <svg viewBox="0 0 24 24" width="22" height="22"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 13H6v-2h12v2zm0-4H6v-2h12v2zm0-4H6V6h12v2z"/></svg>
                 </a>
                 </div>
